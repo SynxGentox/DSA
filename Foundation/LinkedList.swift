@@ -9,8 +9,8 @@ import Foundation
 
 public class LLNode<T> {
     var value: T
-    var nextNode: LLNode?
-    var previousNode: LLNode?
+    var next: LLNode?
+    var previous: LLNode?
     
     public init(value: T) {
         self.value = value
@@ -18,7 +18,7 @@ public class LLNode<T> {
 }
 
 public class LinkedList<T> {
-    public typealias Node = LLNode<T>?
+    public typealias Node = LLNode<T>
     
     private var head: Node?
     public var first: Node? {
@@ -40,14 +40,16 @@ public class LinkedList<T> {
         if let lastNode = last {
             lastNode.next = newNode
             newNode.previous = lastNode
+            print("New node added: \(value)")
         } else {
-            print("LinkedList is empty. Appending new Node ")
             head = newNode
+            print("New node added in empty LinkedList: \(value)")
         }
     }
     
     public var count: Int {
         guard var node = head else {
+            print(0)
             return 0
         }
         var count = 1
@@ -55,34 +57,69 @@ public class LinkedList<T> {
             node = next
             count += 1
         }
+        print(count)
         return count
     }
     
+    public func insert(value: T, at index: Int) {
+        print("value: \(value) is inserted at index: \(index)")
+        guard let node = head else {
+            head = Node(value: value)
+            return
+        }
+        let newNode = Node(value: value)
+        if index == 0 {
+            newNode.next = head
+            head?.previous = newNode
+            head = newNode
+        } else {
+            let previousNode = getItem(at: index - 1)
+            let nextNode = previousNode?.next
+            previousNode!.next = newNode
+            newNode.previous = previousNode
+            newNode.next = nextNode
+            nextNode?.previous = newNode
+        }
+        
+    }
     
-    public func item(atIndex index: Int?) -> [Node]? {
-        var listArray: [Node] = []
+    public func getItem(at index: Int?) -> Node? {
+        var stringArray: String = "["
         guard var node = head else {
+            print(stringArray + "]")
             return nil
         }
         if index == nil {
-            while var next = node?.next {
-                listArray.append(node!)
+            
+            while let next = node.next {
+                stringArray = stringArray + "\(node.value), "
                 node = next
             }
-            return listArray
+            stringArray = stringArray + "\(node.value)"
+            stringArray.split(separator: ", ")
+            print(stringArray + "]")
+            return nil
         } else {
             guard index != 0 else {
-                return Array(head!)
+                stringArray = stringArray + "\(head!.value)"
+                print(stringArray + "]")
+                return head!
             }
-            var node = head?.next
-            for _ in 0..<index {
+            var node = node.next
+            for _ in 1..<index! {
+                
+//                guard let nextNode = node?.next else{ break }
+//                node = nextNode
+                
                 node = node?.next
                 if node == nil { break }
             }
-            listArray = Array(node)
-            return listArray
+            stringArray = stringArray + "\(node!.value)"
+            print(stringArray + "]")
+            return node!
         }
     }
+   
 //    public func node(atIndex index: Int) -> Node {
 //        if index == 0 {
 //            return head!
@@ -96,12 +133,14 @@ public class LinkedList<T> {
 //        }
 //    }
     
-    
 }
 
 let list = LinkedList<String>()
 list.first
 list.last
-list.append(value: "data1")
-
-
+list.append(value: "data2")
+list.append(value: "data3")
+list.append(value: "data4")
+list.append(value: "data5")
+list.insert(value: "data6", at: 1)
+list.getItem(at: nil)
