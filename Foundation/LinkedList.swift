@@ -80,42 +80,62 @@ public class LinkedList<T> {
             newNode.next = nextNode
             nextNode?.previous = newNode
         }
-        
     }
+    
+    public func remove(at index: Int) {
+        guard let node = head else {
+            print("LinkedList is empty")
+            return
+        }
+        var removeNode = getItem(at: index)
+        if removeNode == nil {
+            print("Index doesnt exists")
+            return
+        } else {
+            let prevNode = removeNode?.previous
+            let nextNode = removeNode?.next
+
+            if prevNode == nil {
+                head = nextNode
+                nextNode?.previous = nil
+            } else {
+                prevNode?.next = nextNode
+                nextNode?.previous = prevNode
+            }
+        }
+    }
+    
     
     public func getItem(at index: Int?) -> Node? {
         var stringArray: String = "["
         guard var node = head else {
-            print(stringArray + "]")
+            stringArray + "]"
+            print(stringArray)
             return nil
         }
         if index == nil {
-            
             while let next = node.next {
                 stringArray = stringArray + "\(node.value), "
                 node = next
             }
-            stringArray = stringArray + "\(node.value)"
-            stringArray.split(separator: ", ")
-            print(stringArray + "]")
+            stringArray = stringArray + "\(node.value) ]"
+            print(stringArray)
             return nil
         } else {
             guard index != 0 else {
-                stringArray = stringArray + "\(head!.value)"
-                print(stringArray + "]")
+                stringArray = stringArray + "\(head!.value)]"
+                print(stringArray)
                 return head!
             }
             var node = node.next
             for _ in 1..<index! {
-                
 //                guard let nextNode = node?.next else{ break }
 //                node = nextNode
-                
                 node = node?.next
                 if node == nil { break }
             }
-            stringArray = stringArray + "\(node!.value)"
-            print(stringArray + "]")
+            stringArray = stringArray + "\(node!.value)]"
+            print(stringArray)
             return node!
         }
     }
@@ -142,5 +162,10 @@ list.append(value: "data2")
 list.append(value: "data3")
 list.append(value: "data4")
 list.append(value: "data5")
+list.getItem(at: nil)
 list.insert(value: "data6", at: 1)
 list.getItem(at: nil)
+list.remove(at: 1)
+list.getItem(at: nil)
+
+
