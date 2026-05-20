@@ -167,5 +167,3 @@ list.insert(value: "data6", at: 1)
 list.getItem(at: nil)
 list.remove(at: 1)
 list.getItem(at: nil)
-
-
