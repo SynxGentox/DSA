@@ -73,11 +73,12 @@ class Solution2 {
         var result: [String] = []
         
         // We are using String.Index to read the raw memory in-place instead of Arrays.
+        /// Working: Swift String is Unicode-aware and uses variable-width encoding internally. String.Index is an opaque index into the string's collection representation.
         /// A Character in swift is 16 Bytes and if the network payload is 10MB it takes 160MB immediately which is the heaviest way possible.
         /// Never convert the string to an array. Use Swift's native String.Index to slide a window across the raw string memory in-place.
         
-        /// Working: Here i is currently pointing at the very first character's memory address.
-        /// Note: Neither i nor j are Int, they are Memory Pointers...
+        /// "String.Index = a position in the String"
+        /// Note: Neither i nor j are Int.
         // Time Complexity: O(1), Space Complexity: O(1)
         var i = s.startIndex
         
