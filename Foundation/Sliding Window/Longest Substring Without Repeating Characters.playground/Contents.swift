@@ -48,8 +48,11 @@ class Solution {
 // Time Complexity: O(n), Space Complexity: O(n)
 class Solution2 {
     func lengthOfLongestSubstring(_ s: String) -> Int {
+        // Converting String to UInt8(character's utf8 code) Character code Array.
+        // Space Complexity: O(n)
         let chars = Array(s.utf8)
 
+        
         var lastSeen = Array(repeating: -1, count: 128)
         var left = 0
         var maxLength = 0
