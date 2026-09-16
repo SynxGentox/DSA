@@ -30,6 +30,7 @@
 
 # Hashing
     Hash functions
+    Bucket/Probing
     Collision resolution
     Load factor
     Resizing / rehashing
